@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
       - name: Regenerate .rst documentation
         run: echo "hi" >> docs/source/foo.txt
       - name: Commit documentation
@@ -24,5 +26,5 @@ jobs:
               exit 0
           else
               git commit -m "Regenerate docs"
-              git push origin "HEAD:$GITHUB_REF"
+              git push
           fi
