@@ -13,7 +13,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Regenerate .rst documentation
-        run: echo "hi" >> docs/source/foo.txt
+        run: echo "hi"
       - name: Commit documentation
         run: |
           git config --global user.name github-actions
