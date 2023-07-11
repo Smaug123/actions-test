@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "test-thing"
+version = "0.0.0"
+description = "test test"
+authors = []
+license = "MIT"
+readme = "README.md"
+packages = [{include = "test_thing"}]
+
+[tool.poetry.dependencies]
+python = ">=3.7.4,<4.0"
+sphinx = {version = "5.2.3", optional = true, python = ">=3.8,<3.10"}
+sphinxcontrib-napoleon = {version = ">=0.7", optional = true, python = ">=3.8,<3.10"}
+sphinx-autobuild = {version = ">=2021.3.14", optional = true, python = ">=3.8,<3.10"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.2.0"
+pytest-cov = ">=4.0.0"
+mypy = ">=0.991"
+jupyter = ">=1.0.0"
+circuitsvis = ">=1.38.1"
+plotly = ">=5.12.0"
+isort = "5.8.0"
+black = "^23.3.0"
+pycln = "^2.1.3"
+
+[tool.poetry.group.jupyter.dependencies]
+jupyterlab = ">=3.5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.extras]
+docs = ["Sphinx", "sphinx-autobuild", "sphinxcontrib-napoleon", "furo", "myst_parser","tabulate"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore:pkg_resources is deprecated as an API:DeprecationWarning",
+    # Ignore numpy.distutils deprecation warning caused by pandas
+    # More info: https://numpy.org/doc/stable/reference/distutils.html#module-numpy.distutils
+    "ignore:distutils Version classes are deprecated:DeprecationWarning"
+]
+
+[tool.isort]
+profile = "black"
+extend_skip = ["__init__.py"]

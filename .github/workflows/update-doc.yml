@@ -1,0 +1,31 @@
+name: Regenerate docs
+
+on: pull_request
+
+permissions:
+  contents: write
+
+jobs:
+  update-doc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.4.0
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "poetry"
+      - name: Regenerate .rst documentation
+        run: poetry run sphinx-autobuild -b dirhtml ./source build/html
+      - name: Commit documentation
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@example.com'
+          git add .
+          git diff --cached
+          git commit -m "Regenerate docs" || exit 0
+          git push
